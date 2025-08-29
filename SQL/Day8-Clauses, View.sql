@@ -1,0 +1,138 @@
+/*Group By clause:
+"it is used for grouping the records".
+
+syntax:
+select Group by expression/group function
+from table_name
+[where <filter_condition>]
+group by column_name/expression;*/
+
+use data1;
+
+/*WAQTD NUMBER OF EMPLOYEES WORKING IN EACH DEPTNO*/
+SELECT COUNT(*),DEPTNO
+FROM EMP
+GROUP BY DEPTNO;
+
+SELECT MAX(SAL),MIN(SAL),JOB
+FROM EMP
+GROUP BY JOB;
+
+/*WAQTD NUMBER OF EMPLOYEE WORKING IN EACH DEPTNO EXCEPT ANALYST*/
+SELECT COUNT(*),DEPTNO
+FROM EMP
+WHERE JOB!='ANALYST'
+GROUP BY DEPTNO;
+
+/*WAQTD MAXIMUM SALARY GIVEN TO EACH JOB*/
+SELECT MAX(sAL),JOB
+FROM EMP
+GROUP BY JOB;
+
+/*WAQTD NUMBER OF TIMES SALARY PRESENT IN EMPLOYEE TABLE*/
+SELECT COUNT(*),SAL
+FROM EMP
+GROUP BY SAL;
+
+/*WAQTD NUMBER OF TIMES JOB PRESENT IN EMPLOYEE TABLE*/
+SELECT COUNT(*),JOB
+FROM EMP
+GROUP BY JOB;
+
+/*WAQTD NUMBER OF EMPLOYEES WORKING IN EACH DEPTNO IF THERE ARE
+ATLEAST 3 EMPLOYEES WORKING IN Each deptno*/
+select count(*),deptno
+from emp
+group by deptno
+having count(*)>=3;
+
+/*Having Clause:
+"it is used to filter the groups". 
+->always having clause will execute after group by clause.
+->In having clause we can write aggregate functions like
+max(),min(),sum(),avg(),count()
+->Having clause will execute group by group.
+syntax:
+select group by expression/group function
+from table_name
+[where <filter_condition>]
+group by column_name/expression
+having <filter_group_condition>;
+
+/*waqtd number of employees working in each deptno if there are
+atleast 4 employees working in each deptno except manager*/
+select count(*),deptno
+from emp
+where job!='manager'
+group by deptno
+having count(*)>=4;
+
+/*waqtd total salary given to each job .if totaL salary is more than
+3400*/
+SELECT SUM(SAL),JOB
+FROM EMP
+GROUP BY JOB
+HAVING SUM(SAL)>3400;
+
+/*WAQTD MAXIMUM SALARY GIVEN TO EACH DEPTNO.IF MAXIMUM SALARY IS 
+MORE THAN 3000*/
+SELECT MAX(SAL),DEPTNO
+FROM EMP
+GROUP BY DEPTNO
+HAVING MAX(SAL)>3000;
+
+/*WAQTD TOTAL SALARY GIVEN TO EACH JOB IF EMPLOYEE IS GETTING
+SALARY MORE THAN 2000 AND EMPLOYEE'S TOTAL SALARY IS MORE THAN 3500*/
+SELECT SUM(SAL),JOB
+FROM EMP
+WHERE SAL>2000
+GROUP BY JOB
+HAVING SUM(SAL)>3500
+ORDER BY JOB ;
+
+/*WAQTD SALARY WHICH IS REPETED/DUPLICATED*/
+SELECT SAL,COUNT(*),ENAME
+FROM EMP
+GROUP BY SAL,ENAME
+HAVING COUNT(*)>1;
+
+SELECT HIREDATE,COUNT(*)
+FROM EMP
+GROUP BY HIREDATE
+HAVING COUNT(*)>1;
+
+/*ORDER BY CALUSE:
+"IT IS USED SORT THE GIVEN RESULT SET IN ASCENDING OR DESCENDING ORDER".
+->ORDER BY CLAUSE ALWAYS WILL EXCEUTE AFTER THE SELECT CLAUSE.
+->BY DEFAULT ORDER BY CLAUSE WILL BE IN ASCENDING ORDER.
+*/
+
+SELECT SAL
+FROM EMP
+ORDER BY SAL DESC;
+
+SELECT SAL
+FROM EMP
+ORDER BY SAL ASC;
+
+SELECT ENAME
+FROM EMP
+ORDER BY ENAME ;
+
+/*VIEW:
+"IT'S VIRTUAL TABLE THAT DOESNOT HAVE PHYSICAL EXISTANCE".
+->TO HIDE THE COLUMN_NAMES IN TABLE WE CREATE VIEWS.
+
+SYNTAX:
+CREATE VIEW VIEW_NAME_VIEW AS
+SELECT COLUMN_NAME1,COLUMN_NAME2.....COLUMN_NAMEN
+FROM TABLE_NAME;
+*/
+
+CREATE VIEW MYSQL_VIEW AS
+SELECT ENAME,JOB
+FROM EMP;
+
+SELECT * FROM MYSQL_VIEW;
+
+DROP VIEW MYSQL_VIEW;
